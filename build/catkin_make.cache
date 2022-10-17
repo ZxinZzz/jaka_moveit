@@ -1,0 +1,2 @@
+jaka_rviz:jaka_zu3_moveit_config:jaka_zu3_myurdf:jaka_zu3_testurdf:jakazu3_notebook:joint_motor
+-DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_DEVEL_PREFIX=/home/axin/jaka_test2_ws/devel -DCMAKE_INSTALL_PREFIX=/home/axin/jaka_test2_ws/install -G Unix Makefiles

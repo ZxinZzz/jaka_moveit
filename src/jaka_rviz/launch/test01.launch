@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro '$(find jaka_rviz)/urdf/jaka_zu3.urdf.xacro'" />
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+  <node pkg="gazebo_ros" type="spawn_model" name="model" args="-urdf -model jaka_zu3 -param robot_description" />
+</launch>

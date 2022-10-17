@@ -1,0 +1,12 @@
+jaka_zu3:
+  gripper_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - tool_joint
+    constraints:
+        goal_time: 0.6
+        stopped_velocity_tolerance: 0.05
+        tool_joint: {trajectory: 0.1, goal: 0.1}
+    stop_trajectory_duration: 0.5
+    state_publish_rate:  25
+    action_monitor_rate: 10

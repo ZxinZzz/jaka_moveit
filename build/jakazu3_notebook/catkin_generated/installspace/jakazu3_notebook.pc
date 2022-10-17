@@ -1,0 +1,8 @@
+prefix=/home/axin/jaka_test2_ws/install
+
+Name: jakazu3_notebook
+Description: Description of jakazu3_notebook
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

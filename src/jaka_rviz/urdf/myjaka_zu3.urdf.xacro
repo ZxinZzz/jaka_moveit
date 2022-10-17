@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<robot name="jaka_zu3" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="gazebo_control.xacro" />
+  <xacro:include filename="camera.xacro" />
+
+  <xacro:macro name="cylinder_inertial" params="radius length mass">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="${mass * (3 * radius * radius + length * length) / 12}" ixy="0.0" ixz="0.0"
+        iyy="${mass * (3 * radius * radius + length * length) / 12}" iyz="0.0"
+        izz="${0.5 * mass * radius * radius}" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="box_inertial" params="l w h mass ">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="${mass * (h * h + l * l) / 12}" ixy="0.0" ixz="0.0"
+        iyy="${mass * (w * w + l * l) / 12}" iyz="0.0"
+        izz="${mass * (w * w + h * h) / 12}" />
+    </inertial>
+  </xacro:macro>
+  
+  <xacro:property name="pi" value="3.1415926" />
+  <xacro:property name="base_mass" value="2.0" />  <!-- 0.464  Ixx = 1845.903	Ixy = -26.271	Ixz = -0.086 Iyx = -26.271	Iyy = 833.895	Iyz = -0.041 Izx = -0.086	Izy = -0.041	Izz = 1853.667-->    
+  <xacro:property name="link1_mass" value="2.0" />  <!--0.897  Ixx = 4871.776	Ixy = 228.402	Ixz = 0.020 Iyx = 228.402	Iyy = 1103.322	Iyz = 0.011 Izx = 0.020	Izy = 0.011	Izz = 4967.703 -->
+  <xacro:property name="link2_mass" value="3.42" /> <!--2.325 Ixx = 12015.974	Ixy = 16132.791	Ixz = 0.020 Iyx = 16132.791	Iyy = 57075.725	Iyz = 0.006 Izx = 0.020	Izy = 0.006	Izz = 66888.516 -->
+  <xacro:property name="link3_mass" value="3.42" /> <!--1.213 Ixx = 1312.921	Ixy = -0.156	Ixz = 1247.110 Iyx = -0.156	Iyy = 22571.408	Iyz = -0.011 Izx = 1247.110	Izy = -0.011	Izz = 21960.918 -->
+  <xacro:property name="link4_mass" value="0.8" /> <!--0.493 Ixx = 2610.725	Ixy = 121.849	Ixz = 0.001 Iyx = 121.849	Iyy = 334.757	Iyz = 0.001 Izx = 0.001	Izy = 0.001	Izz = 2643.893 -->
+  <xacro:property name="link5_mass" value="0.8" /> <!--0.551 Ixx = 3611.091	Ixy = 98.862	Ixz = 0.004 Iyx = 98.862	Iyy = 362.851	Iyz = 0.003 Izx = 0.004	Izy = 0.003	Izz = 3642.214 -->
+  <xacro:property name="link6_mass" value="0.35" /> <!--0.1 Ixx = 63.206	Ixy = -0.028	Ixz = -0.089 Iyx = -0.028	Iyy = 58.133	Iyz = 0.025 Izx = -0.089	Izy = 0.025	Izz = 62.796 -->
+
+
+  <link name="plain_link">
+    <visual>
+      <geometry>
+        <box size="0.4 0.4 0.1" /> 
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <material name="gray">
+        <color rgba="0.8 0.8 0.8 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.4 0.4 0.1" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </collision>
+    <xacro:box_inertial mass="200.0" l="1" w="1" h="0.2" />
+  </link>
+  <gazebo reference="plain_link">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  <joint name="plain2cylinder" type="fixed">
+    <parent link="plain_link" />
+    <child link="cylinder_link" />
+    <origin xyz="0 0 0.35" rpy="0 0 0" />
+  </joint>
+
+  <link name="cylinder_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.065" length="0.6" /> 
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <material name="gray">
+        <color rgba="0.8 0.8 0.8 1" />
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.065" length="0.6" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </collision>
+    <!-- <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="20.0" />
+      <inertia ixx="1" ixy="0" ixz="0" iyy="0.9875" iyz="0" izz="1" />
+    </inertial> -->
+    <xacro:cylinder_inertial mass="20.0" radius="0.065" length="0.6" />
+  </link>
+  <gazebo reference="cylinder_link">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  <joint name="cylinder2base" type="fixed">
+    <parent link="cylinder_link" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.3" rpy="0 0 0" />
+  </joint>
+
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.464" />
+      <inertia ixx="0.001845903"	ixy="-0.000026271"	ixz="-0.000000086" iyx="-0.000026271" iyy="0.000833895" iyz="-0.000000041" izx="-0.000000086" izy="-0.000000041"	izz="0.001853667" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0 0.0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_0.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_0.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.04" length="0.075" mass="${base_mass}" /> -->
+  </link>
+  <gazebo reference="base_link">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  <joint name="joint_1" type="revolute">
+    <origin xyz="0 0 0.15055" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="Link_1" />
+    <axis xyz="0 0 1" />
+    <limit lower="-6.28" upper="6.28" effort="330" velocity="1.57" />
+    <dynamics damping="50" friction="1" />
+  </joint>
+
+  <link name="Link_1">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="0.897" />
+      <inertia ixx="0.004871776" ixy="0.000228402" ixz="0.000000020" iyx="0.000228402" iyy="0.001103322" iyz="0.000000011" izx="0.000000020" izy="0.000000011" izz="0.004967703" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_1.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_1.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.04" length="0.118" mass="${link1_mass}" /> -->
+  </link>
+  <gazebo reference="Link_1">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  <joint name="joint_2" type="revolute">
+    <origin xyz="0 0 0" rpy="${pi / 2} 0 0" />
+    <parent link="Link_1" />
+    <child link="Link_2" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.48" upper="3.62" effort="330" velocity="2.16" />
+    <dynamics damping="50" friction="1" />
+  </joint>
+
+  <link name="Link_2">
+    <inertial>
+      <origin xyz="0.11439 -6.6036E-07 -0.11395" rpy="0 0 0" />
+      <mass value="2.325" />
+      <inertia ixx="0.012015974" ixy="0.016132791" ixz="0.000000020" iyx="0.016132791" iyy="0.057075725" iyz="0.000000006" izx="0.000000020" izy="0.000000006" izz="0.066888516" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_2.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_2.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.04" length="0.254" mass="${link2_mass}" /> -->
+
+  </link>
+  <gazebo reference="Link_2">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo> 
+
+  <joint name="joint_3" type="revolute">
+    <origin xyz="0.2479 0 0" rpy="0 0 0" />
+    <parent link="Link_2" />
+    <child link="Link_3" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.05" upper="3.05" effort="330" velocity="2.16" />
+    <dynamics damping="50" friction="1" />
+  </joint>
+
+  <link name="Link_3">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass  value="1.213" />
+      <inertia ixx="0.001312921" ixy="-0.000000156"	ixz="0.001247110" iyx="-0.000000156" iyy="0.022571408" iyz="-0.000000011" izx="0.001247110"	izy="-0.000000011" izz="0.021960918" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_3.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_3.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.035" length="0.235" mass="${link3_mass}" /> -->
+  </link>
+  <gazebo reference="Link_3">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo> 
+
+  <joint name="joint_4" type="revolute">
+    <origin xyz="0.228 0 -0.113" rpy="0 0 0" />
+    <parent link="Link_3" />
+    <child link="Link_4" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.48" upper="3.62" effort="330" velocity="3.83" />
+    <dynamics damping="50" friction="1" />
+  </joint>
+
+  <link name="Link_4">
+    <inertial>
+      <origin xyz="6.5068E-08 -0.014052 0.0031614" rpy="0 0 0" />
+      <mass value="0.493" />
+      <inertia ixx="0.002610725" ixy="0.000121849" ixz="0.000000001" iyx="0.000121849" iyy="0.000334757" iyz="0.000000001" izx="0.000000001" izy="0.000000001" izz="0.002643893" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_4.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_4.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.03" length="0.1175" mass="${link4_mass}" /> -->
+  </link>
+  <gazebo reference="Link_4">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  <joint name="joint_5" type="revolute">
+    <origin xyz="0 -0.11675 0" rpy="${pi / 2} 0 0" />
+    <parent link="Link_4" />
+    <child link="Link_5" />
+    <axis xyz="0 0 1" />
+    <limit lower="-4.71" upper="4.71" effort="330" velocity="3.14" />
+    <dynamics damping="50" friction="1" />
+  </joint>
+
+  <link name="Link_5">
+    <inertial>
+      <origin xyz="7.9256E-08 0.0068655 -0.0029086" rpy="0 0 0" />
+      <mass value="0.551" />
+      <inertia ixx="0.003611091" ixy="0.000098862" ixz="0.000000004" iyx="0.000098862" iyy="0.000362851" iyz="0.000000003" izx="0.000000004" izy="0.000000003" izz="0.003642214" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_5.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_5.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.03" length="0.1175" mass="${link5_mass}" /> -->
+  </link>
+  <gazebo reference="Link_5">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  <joint name="joint_6" type="revolute">
+    <origin xyz="0 0.105 0" rpy="${-pi / 2} 0 0" />
+    <parent link="Link_5" />
+    <child link="Link_6" />
+    <axis xyz="0 0 -1" />
+    <limit lower="${-2 * pi}" upper="${2 * pi}" effort="330" velocity="3.83" />
+    <dynamics damping="50" friction="1" />
+  </joint>
+
+  <link name="Link_6">
+    <inertial>
+      <origin xyz="4.9731E-05 -2.965E-05 -0.016372" rpy="0 0 0" />
+      <mass value="0.1" />
+      <inertia ixx="0.000063206" ixy="-0.000000028"	ixz="-0.000000089" iyx="-0.000000028"	iyy="0.000058133"	iyz="0.000000025" izx="-0.000000089" izy="0.000000025" izz="0.000062796" />
+    </inertial>
+    
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_6.STL" />
+      </geometry>
+      <material name="Grey">
+        <color rgba="0.7 0.7 0.7 1.0" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://jaka_rviz/meshes/jaka_zu3_meshes/Link_6.STL" />
+      </geometry>
+    </collision>
+    <!-- <xacro:cylinder_inertial radius="0.03" length="0.105" mass="${link6_mass}" /> -->
+  </link>
+  <gazebo reference="Link_6">
+    <!-- <selfCollide>true</selfCollide> -->
+    <meterial>Gazebo/Grey</meterial>
+  </gazebo>
+
+  
+
+  <!-- camera_link -->
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.01 0.025 0.025" />
+      </geometry>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+      <meterial name="black" />
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="fixed" >
+    <parent link="Link_6" />
+    <child link="camera_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <!-- ##################### -->
+
+  <link name="world" />
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world" />
+    <child link = "plain_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+
+  <xacro:macro name="arm_transmission" params="joint_name">
+
+      <transmission name="trans">
+          <type>transmission_interface/SimpleTransmission</type>
+          <joint name="${joint_name}">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+          </joint>
+          <actuator name="motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+          </actuator>
+      </transmission>
+  </xacro:macro>
+
+    <xacro:arm_transmission joint_name='joint_1' />
+    <xacro:arm_transmission joint_name='joint_2' />
+    <xacro:arm_transmission joint_name='joint_3' />
+    <xacro:arm_transmission joint_name='joint_4' />
+    <xacro:arm_transmission joint_name='joint_5' />
+    <xacro:arm_transmission joint_name='joint_6' />
+
+</robot>

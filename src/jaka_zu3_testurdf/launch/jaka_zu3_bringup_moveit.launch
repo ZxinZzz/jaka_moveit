@@ -1,0 +1,15 @@
+<launch>
+  
+    <!-- Launch Gazebo  -->
+    <include file="$(find jaka_zu3_myurdf)/launch/jaka_zu3/jaka_zu3_gazebo_world.launch" />
+
+    <!-- ros_control arm launch file -->
+    <include file="$(find jaka_zu3_myurdf)/launch/jaka_zu3/jaka_zu3_gazebo_states.launch" />   
+
+    <!-- ros_control trajectory control dof arm launch file -->
+    <include file="$(find jaka_zu3_myurdf)/launch/jaka_zu3/jaka_zu3_trajectory_controller.launch" />
+
+    <!-- moveit launch file -->
+    <include file="$(find jaka_zu3_moveit_config)/launch/jaka_zu3_moveit_planning_execution.launch" />
+
+</launch>

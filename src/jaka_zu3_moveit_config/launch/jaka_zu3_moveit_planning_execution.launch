@@ -1,0 +1,17 @@
+<launch>
+    <arg name="sim" default="false" />
+    <arg name="debug" default="false" />
+      
+    <!-- Remap follow_joint_trajectory -->
+    <!-- <remap if="$(arg sim)" from="/follow_joint_trajectory" to="/arm_controller/follow_joint_trajectory"/> -->
+    
+    <!-- Launch moveit -->
+    <include file="$(find jaka_zu3_moveit_config)/launch/move_group.launch">
+        <arg name="publish_monitored_planning_scene" value="true" />
+    </include>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="/use_gui" value="false"/> 
+        <rosparam param="/source_list">[/jaka_zu3/joint_states]</rosparam>
+      </node>
+  </launch>
+  

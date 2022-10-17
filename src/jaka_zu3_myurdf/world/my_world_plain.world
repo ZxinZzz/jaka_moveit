@@ -1,0 +1,979 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/White</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+
+    <model name="box">
+      <!-- <pose>0.35 0.7 1.35 0 -0 0</pose> -->
+        <link name="link">
+          <collision name="collision">
+            <geometry>
+              <sphere>
+                <radius>0.05</radius>
+              </sphere>
+            </geometry>
+          </collision>
+  
+          <visual name="visual">
+            <geometry>
+        <sphere>
+           <radius>0.05</radius>
+        </sphere>
+            </geometry>
+     <material>
+       <script>
+         <name>Gazebo/Blue</name>
+         <uri>file://media/materials/scripts/gazebo.material</uri>
+       </script>
+     </material>
+          </visual>
+          <gravity>0</gravity>            <!-- Set the gravity of this to zero. Now ball will not move down-->
+       </link>
+      <plugin name="ball_animation_plugin" filename="libball_animation_plugin.so"/>
+      </model>   
+
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <state world_name='default'>
+      <sim_time>51 491000000</sim_time>
+      <real_time>3 130033411</real_time>
+      <wall_time>1652504968 278549329</wall_time>
+      <iterations>2492</iterations>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+
+      <model name='jaka_zu3'>
+        <pose frame=''>-0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='Link_1'>
+          <pose frame=''>-0 -0 0.85055 2.7e-05 0 -0.000384</pose>
+          <velocity>-1e-06 -0 -0 -2.4e-05 -1.8e-05 -0.000453</velocity>
+          <acceleration>-0.001573 -6e-06 3e-06 -0.083223 -0.000799 -0.106438</acceleration>
+          <wrench>-0.00139 -5e-06 3e-06 0 -0 0</wrench>
+        </link>
+        <link name='Link_2'>
+          <pose frame=''>0 -0 0.85055 1.57073 0.410759 -0.000411</pose>
+          <velocity>0 1e-06 -1e-06 0.000123 0.172166 0.001735</velocity>
+          <acceleration>-0.00344 -0.000353 0.003368 0.001243 -0.017621 -0.004216</acceleration>
+          <wrench>-0.007981 -0.00082 0.007814 0 -0 0</wrench>
+        </link>
+        <link name='Link_3'>
+          <pose frame=''>0.225537 -9.3e-05 0.752321 1.57073 0.459993 -0.000414</pose>
+          <velocity>-0.016909 0.000404 -0.038831 0.000131 0.192813 0.001736</velocity>
+          <acceleration>-0.006574 -0.000799 0.006889 0.001206 -0.024771 -0.004081</acceleration>
+          <wrench>-0.007911 -0.000961 0.00829 0 -0 0</wrench>
+        </link>
+        <link name='Link_4'>
+          <pose frame=''>0.429881 0.112823 0.651095 1.57073 0.454719 -0.000414</pose>
+          <velocity>-0.036619 0.000772 -0.078219 0.000131 0.192813 0.001737</velocity>
+          <acceleration>-0.01068 -0.001486 0.0162 0.001207 -0.024771 -0.00397</acceleration>
+          <wrench>-0.005269 -0.000733 0.007992 0 -0 0</wrench>
+        </link>
+        <link name='Link_5'>
+          <pose frame=''>0.378603 0.112836 0.546209 3.14152 0.454719 -0.000421</pose>
+          <velocity>-0.056844 0.000697 -0.068333 0.000128 0.192813 0.001733</velocity>
+          <acceleration>-0.006823 -0.00121 0.018459 0.001294 -0.024771 -0.003705</acceleration>
+          <wrench>-0.003758 -0.000666 0.010168 0 -0 0</wrench>
+        </link>
+        <link name='Link_6'>
+          <pose frame=''>0.378565 0.014336 0.546215 1.57073 0.454713 -0.000421</pose>
+          <velocity>-0.056672 0.000698 -0.068339 0.000128 0.192813 0.001733</velocity>
+          <acceleration>-0.007047 -0.001192 0.018377 0.001294 -0.024772 -0.003641</acceleration>
+          <wrench>-0.000669 -0.000113 0.001744 0 -0 0</wrench>
+        </link>
+        <link name='Link_0'>
+          <pose frame=''>0 0 0.7 0 -0 0</pose>
+          <velocity>0 0 0 0 -1e-06 0</velocity>
+          <acceleration>-0.000229 2.4e-05 3e-06 6.9e-05 -0.001686 -8.4e-05</acceleration>
+          <wrench>-0.016168 0.001674 0.000211 0 -0 0</wrench>
+        </link>
+
+        <link name='base_footprint'>
+          <pose frame=''>-0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -1e-06 0</velocity>
+          <acceleration>-0.000229 2.4e-05 3e-06 6.9e-05 -0.001686 -8.4e-05</acceleration>
+          <wrench>-0.016168 0.001674 0.000211 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>4.76783 -5.08675 2.36354 0 0.275643 2.35619</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='jaka_zu3'>
+      <plugin name="velocity_controller_ros" filename="libvelocity_controller_ros.so"/>
+      <link name='base_footprint'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0.153621 0 -0 0</pose>
+          <mass>70.4639</mass>
+          <inertia>
+            <ixx>3.21951</ixx>
+            <ixy>-1.0227e-07</ixy>
+            <ixz>-1.0724e-05</ixz>
+            <iyy>3.84452</iyy>
+            <iyz>3.7859e-07</iyz>
+            <izz>4.93416</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_footprint_fixed_joint_lump__plain_link_collision'>
+          <pose frame=''>0 0 0.05 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.4 0.4 0.1</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='base_footprint_fixed_joint_lump__cylinder_link_collision_1'>
+          <pose frame=''>0 0 0.4 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.6</length>
+              <radius>0.065</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <!-- <collision name='base_footprint_fixed_joint_lump__Link_0_collision_2'>
+          <pose frame=''>0 0 0.7 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_0.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision> -->
+        <visual name='base_footprint_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>0.001</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__plain_link_visual_1'>
+          <pose frame=''>0 0 0.05 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.4 0.4 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__cylinder_link_visual_2'>
+          <pose frame=''>0 0 0.4 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.6</length>
+              <radius>0.065</radius>
+            </cylinder>
+          </geometry>
+        </visual>
+        <!-- <visual name='base_footprint_fixed_joint_lump__Link_0_visual_3'>
+          <pose frame=''>0 0 0.7 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_0.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay/>
+        <velocity_decay/>
+        <velocity_decay/>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic> -->
+      </link>
+
+      <link name='Link_0'>
+        <pose frame=''>0 0 0.7 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.46393</mass>
+          <inertia>
+            <ixx>0.00064494</ixx>
+            <ixy>-1.0227E-07</ixy>
+            <ixz>-1.0724E-05</ixz>
+            <iyy>0.00065157</iyy>
+            <iyz>3.7859E-07</iyz>
+            <izz>0.00083278</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_0_collision'>
+          <pose frame=''>0 0 0.7 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_0.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Link_0_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_0.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+
+      <joint name='world_joint' type='fixed'>
+        <child>base_footprint</child>
+        <parent>world</parent>
+      </joint>
+      <link name='Link_1'>
+        <pose frame=''>0 0 0.85055 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>0.88365</mass>
+          <inertia>
+            <ixx>0.0015634</ixx>
+            <ixy>1.5495e-08</ixy>
+            <ixz>5.6443e-09</ixz>
+            <iyy>0.0015047</iyy>
+            <iyz>-9.0168e-06</iyz>
+            <izz>0.0010527</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_1_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_1.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Link_1_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_1.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+
+      <joint name='joint_0' type='fixed'>
+        <child>Link_0</child>
+        <parent>base_footprint</parent>
+        <axis>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+
+      <joint name='joint_1' type='revolute'>
+        <child>Link_1</child>
+        <parent>Link_0</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-4.71</lower>
+            <upper>4.71</upper>
+            <effort>300</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>50</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='Link_2'>
+        <pose frame=''>0 0 0.85055 1.5708 -1.5708 0</pose>
+        <inertial>
+          <pose frame=''>0.114 -1e-06 -0.11162 0 -0 0</pose>
+          <mass>2.3202</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_2_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_2.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Link_2_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_2.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='joint_2' type='revolute'>
+        <child>Link_2</child>
+        <parent>Link_1</parent>
+        <axis>
+          <xyz>0 -1 -4e-06</xyz>
+          <limit>
+            <lower>-1.48</lower>
+            <upper>4.62</upper>
+            <effort>300</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>50</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='Link_3'>
+        <pose frame=''>1.246 0 0.85055 1.5708 1.5708 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <mass>1.2034</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_3_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_3.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Link_3_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_3.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='joint_3' type='revolute'>
+        <child>Link_3</child>
+        <parent>Link_2</parent>
+        <axis>
+          <xyz>0 -1 -4e-06</xyz>
+          <limit>
+            <lower>-3.05</lower>
+            <upper>3.05</upper>
+            <effort>330</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>50</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='Link_4'>
+        <pose frame=''>0.474 0.113 0.85055 1.5708 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 -0.014051 0.003161 0 -0 0</pose>
+          <mass>0.49334</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_4_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_4.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Link_4_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_4.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='joint_4' type='revolute'>
+        <child>Link_4</child>
+        <parent>Link_3</parent>
+        <axis>
+          <xyz>0 -1 -4e-06</xyz>
+          <limit>
+            <lower>-1.48</lower>
+            <upper>4.62</upper>
+            <effort>330</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>50</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='Link_5'>
+        <pose frame=''>0.474 0.113 0.7338 -3.14159 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0.006864 -0.002158 0 -0 0</pose>
+          <mass>0.55082</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_5_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_5.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='Link_5_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_5.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='joint_5' type='revolute'>
+        <child>Link_5</child>
+        <parent>Link_4</parent>
+        <axis>
+          <xyz>0 7e-06 -1</xyz>
+          <limit>
+            <lower>-4.71</lower>
+            <upper>4.71</upper>
+            <effort>330</effort>
+            <velocity>3.83</velocity>
+          </limit>
+          <dynamics>
+            <damping>50</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='Link_6'>
+        <pose frame=''>0.474 0.0145 0.7338 1.5708 -0 0</pose>
+        <inertial>
+          <pose frame=''>5.3e-05 -0.000101 -0.009103 0 -0 0</pose>
+          <mass>0.094894</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>5.29344e-14</ixy>
+            <ixz>4.78539e-12</ixz>
+            <iyy>1</iyy>
+            <iyz>-9.16626e-12</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='Link_6_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/collision/Link_6.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='Link_6_fixed_joint_lump__camera_link_collision_1'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='Link_6_fixed_joint_lump__ee_link_collision_2'>
+          <pose frame=''>-0.01 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.01 0.01 0.01</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='Link_6_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/axin/jaka_ws/src/jaka_zu3_myurdf/meshes/visual/Link_6.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='Link_6_fixed_joint_lump__camera_link_visual_1'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.02 0.02 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay/>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <sensor name='camera_node' type='depth'>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <camera name='__default__'>
+            <horizontal_fov>1.0472</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <!-- <format>R8G8B8</format> -->
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+            <!-- <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.007</stddev>
+            </noise> -->
+          </camera>
+          <plugin name='kinect_camera_controller' filename='libgazebo_ros_openni_kinect.so'>
+            <cameraName>camera</cameraName>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <imageTopicName>rgb/image_raw</imageTopicName>
+            <depthImageTopicName>depth/image_raw</depthImageTopicName>
+            <pointCloudTopicName>depth/points</pointCloudTopicName>
+            <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+            <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+            <frameName>camera_depth_optical_frame</frameName>
+            <baseline>0.1</baseline>
+            <distortion_k1>0.0</distortion_k1> <!-- 未处理畸变-->
+            <distortion_k2>0.0</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0</distortion_t1>
+            <distortion_t2>0.0</distortion_t2>
+            <pointCloudCutoff>0.1</pointCloudCutoff>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+          <pose frame=''>0 0 0 0 -1.570795 0</pose>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='joint_6' type='revolute'>
+        <child>Link_6</child>
+        <parent>Link_5</parent>
+        <axis>
+          <xyz>0 1 4e-06</xyz>
+          <limit>
+            <lower>-6.28318</lower>
+            <upper>6.28318</upper>
+            <effort>330</effort>
+            <velocity>3.14</velocity>
+          </limit>
+          <dynamics>
+            <damping>50</damping>
+            <friction>1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <static>0</static>
+      <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
+        <robotNamespace>/jaka_zu3</robotNamespace>
+      </plugin>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+    </model>
+  </world>
+</sdf>

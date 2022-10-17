@@ -1,0 +1,4 @@
+# generated from genmsg/cmake/pkg-msg-paths.cmake.develspace.in
+
+set(jakazu3_notebook_MSG_INCLUDE_DIRS "/home/axin/jaka_test2_ws/src/jakazu3_notebook/msg")
+set(jakazu3_notebook_MSG_DEPENDENCIES std_msgs)

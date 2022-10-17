@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: jaka_zu3_testurdf
+    relative_path: urdf/2022_7_21_test.xacro
+    xacro_args: --inorder
+  SRDF:
+    relative_path: config/jaka_zu3.srdf
+  CONFIG:
+    author_name: zx
+    author_email: zx@1.com
+    generated_timestamp: 1658336780

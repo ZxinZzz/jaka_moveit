@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Robot state publisher -->
+  <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" respawn="false" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" type="string" value="" />
+  </node> -->
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/jaka_zu3/joint_states" />
+  </node>
+
+  <!-- Fake Calibration -->
+  <node pkg="rostopic" type="rostopic" name="fake_joint_calibration"
+        args="pub /calibrated std_msgs/Bool true" />
+  
+  <!-- joint_state_controller -->
+  <rosparam file="$(find jaka_zu3_myurdf)/config/jaka_zu3_gazebo_joint_states.yaml" command="load"/>
+  <node name="joint_controller_spawner" pkg="controller_manager" ns="/jaka_zu3" type="spawner" args="joint_state_controller" respawn="false" output="screen"/>
+  
+</launch>

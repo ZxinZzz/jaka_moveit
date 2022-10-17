@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="red_box_path" type="str" value="$(find jaka_zu3_myurdf)/urdf/red_box.urdf"/>
+    <arg name="paused" default="true" doc="Starts gazebo in paused mode" />
+    <arg name="use_sim_time" default="true" />
+    <arg name="gui" default="true" />
+    <arg name="headless" default="false" />
+    <arg name="debug" default="false"  />
+    <arg name="sim" default="true"/>
+
+  <!-- startup simulated world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+    <arg name="world_name" value="$(find jaka_zu3_myurdf)/world/empty.world" />
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)" />
+    <arg name="use_sim_time" value="$(arg use_sim_time)" />
+    <arg name="headless" value="$(arg headless)" />
+</include>
+
+  <!-- send robot urdf to param server -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find jaka_zu3_myurdf)/urdf/2022_7_6_test.xacro'"/>
+  
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -param robot_description -model jaka_zu3 -x 0 -y 0.6 -z 0
+        -J joint_1 -1.54
+        -J joint_2 1
+        -J joint_3 -1.2
+        -J joint_4 2
+        -J joint_5 1.6 "
+        output="screen" />
+
+  <!-- new add-->
+  <!-- <rosparam file="$(find jaka_zu3_myurdf)/config/jaka_zu3_gazebo_control.yaml" command="load" />
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/jaka_zu3" args="joint_state_controller
+        joint1_position_controller
+        joint2_position_controller
+        joint3_position_controller
+        joint4_position_controller
+        joint5_position_controller
+        joint6_position_controller
+        tooljoint_position_controller
+        "/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"  /> -->
+  
+  
+  <!-- new add-->
+
+
+  <include file="$(find jaka_zu3_myurdf)/launch/controller_utils.launch"/>
+  
+  <rosparam file="$(find jaka_zu3_myurdf)/config/jaka_zu3_trajectory_control.yaml" command="load"/>
+  <!-- <rosparam file="$(find jaka_zu3_myurdf)/config/gripper_controller.yaml" command="load"/> -->
+
+  <node name="arm_controller_spawner" pkg="controller_manager" ns="/jaka_zu3" type="spawner" args="spawn arm_joint_controller gripper_effort_controller" respawn="false" output="screen"/>
+
+
+  <!-- new add-->
+  <node name="joint_controller_spawner" pkg="controller_manager" ns="/jaka_zu3" type="spawner" args="joint_state_controller" respawn="false" output="screen"/>
+
+  
+  <!-- new add-->
+
+  <!-- Effort Controllers -->
+<!--   <rosparam file="$(find ur5_single_arm_tufts)/controller/effort_controller.yaml" command="load"/>
+  <node name="effort_controller_spawner" pkg="controller_manager" type="controller_manager" args="spawn arm_effort_controller gripper_effort_controller" respawn="false" output="screen"/> -->
+
+  <include file="$(find jaka_zu3_moveit_config)/launch/jaka_zu3_moveit_planning_execution.launch">
+    <arg name="debug" default="$(arg debug)" />
+    <arg name="sim" default="$(arg sim)" />
+  </include>
+
+  <include file="$(find jaka_zu3_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="debug" default="$(arg debug)" />
+    <arg name="config" default="true" />
+  </include>
+
+  <node name="spawn_conveyor_belt" pkg="gazebo_ros" type="spawn_model" args="-file $(find jaka_zu3_myurdf)/urdf/conveyor_belt.urdf -urdf -model conveyor_belt -z 0.5" />
+  <node name="bin" pkg="gazebo_ros" type="spawn_model" args="-file $(find jaka_zu3_myurdf)/urdf/bin.urdf -urdf -model bin -y 0.7 -x -0.4 -z 0.5" />
+  <node name="blocks_spawner" pkg="jakazu3_notebook" type="blocks_spawner" output="screen" />
+  <node name="blocks_poses_publisher" pkg="jakazu3_notebook" type="blocks_poses_publisher" output="screen" />
+</launch>
